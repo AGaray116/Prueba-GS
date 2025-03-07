@@ -1,0 +1,14 @@
+Ejecutar jar
+
+Exportar la base de datos Se usa MySQL
+Cambiar el username y password en aplication.properties Para la base de datos
+Realizar un mvn clean install para que cree el jar con las nuevas credenciales de la base de datos
+
+1.- Ubicarse en la carpeta reto/back_reto/target en la terminal
+2.-Ejecutar el siguiente comando java -jar back_reto-0.0.1-SNAPSHOT.jar
+
+Levantar WEB
+1.- Ubicarse en la carpeta reto_industrial/web_reto en la terminal
+2.- Ejecutar npm install --force
+3.-  Ejecutar el siguiente comando ng serve -o
+

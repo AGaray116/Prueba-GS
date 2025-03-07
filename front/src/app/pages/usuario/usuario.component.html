@@ -1,0 +1,123 @@
+<div class="container">
+
+    <h3>Usuarios</h3>
+
+    <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+            (click)="newUsuario()">
+            Nuevo Usuario
+        </button>
+    </div>
+    <br>
+
+    <div class="d-flex justify-content-start">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"># </th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido Paterno</th>
+                    <th scope="col">Apellido Materno</th>
+                    <th scope="col">Fecha de Nacimiento</th>
+                    <th scope="col">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let u of usuarios">
+                    <td>{{u.id}}</td>
+                    <td>{{u.nombre}}</td>
+                    <td>{{u.apellidoPaterno}}</td>
+                    <td>{{u.apellidoMaterno}}</td>
+                    <td>{{u.fechaNacimiento | date: 'dd/MM/yyyy'}}</td>
+                    <td>
+                        <div class="row">
+                            <div class="col-3">
+                                <button type="button" class="btn btn-outline-primary mr-4 ml-4" (click)="editUsuario(u)"
+                                    data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Editar</button>
+                            </div>
+                            <div class="col-6">
+                                <button type="button" class="btn btn-outline-danger" (click)="deleteUsuario(u.id)"
+                                    style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">X</button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form [formGroup]="formUsuario" (ngSubmit)="saveUsuario()">
+                    <div class="modal-header">
+                        <strong class="modal-title fs-5" id="staticBackdropLabel">{{title}}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="mb-3">
+                            <strong for="exampleFormControlInput1" class="form-label">Nombre</strong>
+                            <strong
+                            *ngIf="formUsuario.get('nombre')?.hasError('required')" class="p-error"> * </strong>
+                            <input type="text" class="form-control" pInputText formControlName="nombre"
+                                [disabled]="true" id="exampleFormControlInput1" />
+                                <small *ngIf="formUsuario.get('nombre')?.hasError('minlength')" class="p-error"> Minimo 3
+                                    caracteres </small>
+                        </div>
+
+                        <div class="mb-3">
+                            <strong for="exampleFormControlInput2" class="form-label">Apellido Paterno</strong>
+                            <strong
+                            *ngIf="formUsuario.get('apellidoPaterno')?.hasError('required')" class="p-error"> * </strong>
+                            <input type="text" class="form-control" pInputText formControlName="apellidoPaterno"
+                                [disabled]="true" id="exampleFormControlInput2" />
+                                <small *ngIf="formUsuario.get('apellidoPaterno')?.hasError('minlength')" class="p-error"> Minimo 3
+                                    caracteres </small>
+                        </div>
+
+                        <div class="mb-3">
+                            <strong for="exampleFormControlInput3" class="form-label">Apellido Materno</strong>
+                            <strong
+                            *ngIf="formUsuario.get('apellidoMaterno')?.hasError('required')" class="p-error"> * </strong>
+                            <input type="text" class="form-control" pInputText formControlName="apellidoMaterno"
+                                [disabled]="true" id="exampleFormControlInput3" />
+                                <small *ngIf="formUsuario.get('apellidoMaterno')?.hasError('minlength')" class="p-error"> Minimo 3
+                                    caracteres </small>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="row">
+                                <strong for="exampleFormControlInput4" class="form-label">Fecha de Nacimiento
+                                </strong>
+                                <strong
+                            *ngIf="formUsuario.get('fechaNacimiento')?.hasError('required')" class="p-error"> * </strong>
+                            </div>
+                            <div class="row">
+                                <p-calendar dateFormat="dd/mm/yy" formControlName="fechaNacimiento"
+                                id="exampleFormControlInput4" />
+                            </div>
+                            <small *ngIf="formUsuario.get('fechaNacimiento')?.hasError('minlength')" class="p-error"> Minimo 3
+                                caracteres </small>
+                        </div>
+
+                        <strong
+                        class="p-error"> * </strong> <label for="">Campos obligatorios</label>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button *ngIf="!editar" type="button" class="btn btn-primary" (click)="saveUsuario()"
+                            [disabled]="!formUsuario.valid" data-bs-dismiss="modal"> Guardar</button>
+
+                        <button *ngIf="editar" type="button" class="btn btn-primary" (click)="saveUsuario()"
+                            [disabled]="!formUsuario.valid" data-bs-dismiss="modal">Editar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <p-toast></p-toast>
+</div>
